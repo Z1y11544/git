@@ -1515,4 +1515,4 @@ li = ['a','b','c','d']
 # 1. as给模块起别名
 # 语法:import 模块名 as 别名
 # 2. as给模块中的功能起别名
-# 语法:from 模块名 import 功能名 as 别名
+# 语法:from 模块名 import 功能名 as 别名 

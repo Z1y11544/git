@@ -1330,7 +1330,7 @@ li = ['a','b','c','d']
 
 # 3.3 内置函数二
 # 3.3.1 max():求最大值
-# 3.3.2 m(in():求最小值
+# 3.3.2 min():求最小值
 # print(min(4,1,8))
 # print(max(4,1,8))
 # print(min(5,-8,key=abs))      # 传入了求绝对值函数，则参数就会先求绝对值再取较大者
@@ -1608,3 +1608,102 @@ li = ['a','b','c','d']
 # id()：判断两个变量是否是同一个值的引用
 
 # 2.2 每次开启内函数都在使用同一份闭包变量
+
+
+# 3. 装饰器
+# def test02():
+#     print("发送消息")
+# def test(fn):
+#     print("开始注册")
+#     print("登录")
+#     fn()
+# test(test02)
+# 作用:在不改变原有代码的情况下添加新功能
+# 条件:
+#     1.不修改源程序或函数的代码
+#     2.不改变函数或程序的调用方法
+# 3.1 含义:
+# 本质上就是一个闭包函数,他的好处就是在不修改原有代码的前提下,增加额外功能
+# 3.2 标准版装饰器
+# def send():      # 被装饰的函数
+#     print("发送消息")
+# send()
+# 闭包
+# def outer(fn):
+#     # 既包含原有功能，又包含新功能
+#     def inner():
+#         print("登录")
+#         # 执行被装饰的函数
+#         fn()
+#     return inner
+# ot = outer(send)
+# ot()
+# 装饰器的原理就是将原有函数名重新定义为以原函数为参数的闭包
+
+# 3.3 语法糖
+# 格式:@装饰器名称
+# def outer(fn):
+#     def inner():
+#         print("登录")
+#         # 执行被装饰的函数
+#         fn()
+#         print("登出")
+#     return inner
+# @outer
+# def send():
+#     print("发送消息")
+# send()
+
+# 3.4 被装饰的函数有参数
+# def outer(fn):
+#     def inner(name):
+#         print(f"{name}是内层的形参")
+#         fn(name)
+#     return inner
+# @outer
+# def func(name):
+#     print("这是被装饰的函数")
+# func("ziyang")
+# ot = outer(func)
+# ot("name")
+
+# 3.5 被装饰的函数有可变参数*args，**kwargs
+# 被装饰的函数
+# def func(*args,**kwargs):
+#     print(args)
+#     print(kwargs)
+# # func(name='name')
+# # 装饰器函数
+# def outer(fn):
+#     def inner(*args,**kwargs):
+#         print("登录···")
+#         fn(*args,**kwargs)
+#     return inner
+# 和前面一样的调用方式
+# outer(func)(name='name')
+
+# 3.6 多个装饰器
+# 第一个装饰器
+# def deco1(fn):
+#     def inner():
+#         return "哈哈哈 " + fn() + "呵呵呵 "
+#     return inner
+# # 第二个装饰器
+# def deco2(fn):
+#     def inner():
+#         return "Niceee! " + fn() + " Let's gooo~ "
+#     return inner
+# # 第三个装饰器
+# def deco3(fn):
+#     def inner():
+#         return "老子是冠军 " + fn() + "他是什么 "
+#     return inner
+# # 被装饰的函数一
+# @deco1
+# @deco2
+# @deco3
+# def test1():
+#     return "晚上在学python "
+# print(test1())     # 哈哈哈Niceee! 晚上在学python Let's gooo~呵呵呵
+# 多个装饰器的装饰过程，离函数最近的装饰器先装饰
+# 然后外面的装饰器再进行装饰，由内到外的装饰过程

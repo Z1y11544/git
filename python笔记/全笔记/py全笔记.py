@@ -1708,3 +1708,135 @@ li = ['a','b','c','d']
 # print(test1())     # 哈哈哈Niceee! 晚上在学python Let's gooo~呵呵呵
 # 多个装饰器的装饰过程，离函数最近的装饰器先装饰
 # 然后外面的装饰器再进行装饰，由内到外的装饰过程
+
+# 十三--面向对象基础
+# 1.面对过程和面对对象的区别
+# 面对过程(手洗):需要实现一个功能的时候,着重的是过程,分析出一个个步骤
+#               并把一个个步骤用一个个函数实现,再依次调用每个函数即可
+# (每一个步骤都需要自己亲力亲为)
+
+# 面向对象(机洗):需要实现一个功能的时候,着重的是谁去做
+# (偷懒，找别人做)
+
+# 2.类和对象
+# 类是一系列具有相同属性和行为事物的统称,不是真实存在的事物
+# 对象是类的具体实现，是类创建出来的真实存在的事物，面向对象思想的核心
+# 在开发中，现有类，再有对象
+# 2.1 类的三要素
+# 1、类名
+# 2、属性:对象的特征描述，用来说明是什么样子的
+# 3、方法:对象具有的功能(行为)，用来说明能做什么
+# 举例:
+# 类名:人类
+# 属性:身高、体重、年龄
+# 方法:走路，说话、学习
+# 2.2 定义类
+# class 类名:   # 类名必须符合标识符规定，同时遵循大驼峰命名法
+#       代码块
+# 洗衣机类
+# class Washer:
+#     height = 800    # 类属性:就是类所拥有的属性
+# 查看类属性:类名.属性名
+# print(Washer.height)
+# 新增类属性:类名.属性名=值
+# Washer.width = 450
+# print(Washer.width)
+# 2.3 创建对象
+# 创建对象的过程也叫做实例化对象
+# 2.3.1 实例化对象的基本格式:对象名 = 类名()
+# 实例化一个洗衣机对象
+# wa = Washer()
+# print(wa)       # 对象在内存中的地址
+# 第二次实例化
+# wa2 = Washer()
+# print(wa2)
+# 内存地址不一样，说明是不一样的对象，可以实例化多个对象
+
+# 2.4 实例方法和实例属性
+# 2.4.1 实例方法
+# 由对象调用,至少要有一个self参数,执行实例方法的时候
+# 自动将调用改方法的对象赋值给self
+# class Washer:
+#     height = 800
+#     def wash(self):     # self参数是类中的实例方法必须具备的
+#         print("我会洗衣服")
+#         print("方法中的self",self)      # 表示当前调用该方法的对象
+# 实例化对象
+# wa = Washer()
+# 调用类中的方法
+# wa.wash()
+# print(wa)
+# wa2 = Washer()
+# wa2.wash()
+# print(wa2)
+# self代表对象本身,当对象调用实例方法时python会自动将
+# 对象本身的引用作为参数,传递到实例方法的第一个参数self里面
+
+# 2.4.2实例属性
+# 1.格式:self.属性名
+# class Person:
+#     name = "Ziyang"
+#     def introduction(self):
+#         print("我是实例方法")
+#         print(f"{Person.name}的年龄:{self.age}")
+#                                 # self.age是实例属性
+# pe = Person()
+# pe.age = 17
+# pe.introduction()
+# 2.实例属性和类属性的区别
+# 类属性属于类,是公共的,大家都能访问到
+# # 实例属性是属于对象的,是私有的,只能由对象名访问,不能由类名访问
+# class Person:
+#     name = "Ziyang"
+#     def introduction(self):
+#         print("我是实例方法")
+#         print(f"{Person.name}的年龄:{self.age}")
+#                                 # self.age是实例属性
+# pe = Person()
+# pe.age = 17
+# pe.sex = "男"       # 实例属性
+# print(pe.sex)       # 根据对象名访问实例属性
+# print(Person.sex)
+# 实例属性只能由对象名访问,不能由类名访问
+# pe.introduction()
+# 访问类属性,类可以访问到,实例对象也可以
+# 每实例化一次就要添加一次,效率不高
+
+# 3.构造函数__init__()
+# 作用:通常用来做属性初始化或者赋值操作
+# 注意:在类实例化对象的时候,会被自动调用
+# class Test():
+#     def __init__(self):     # self--实例方法
+#         print("这是__init__()函数")
+# te = Test()      # 自动调用
+# class Person:   # 人类
+#     def __init__(self,name,age,hight):
+#         self.name = name    # 实例属性
+#         self.age = age
+#         self.hight = hight
+#     def play(self):
+#         print(f"{self.name}在打瓦")
+#     def intro(self):
+#         print(f"{self.name}{self.age}岁了,身高{self.hight}cm")
+# # 实例化对象
+# pe = Person("ziyang",17,175)
+# pe.play()
+# pe.intro()
+# # 第二次实例化
+# pe2 = Person("ziyi",18,158)
+# pe2.play()
+# pe2.intro()
+
+# 4.析构函数 __del__()
+# 删除对象时,解释器会默认调用__del__()方法
+# class Lei():
+#     def __init__(self):
+#         print("我是init方法")
+#     def __del__(self):
+#         print("被销毁了")
+# le = Lei()
+# del le
+# del le语句执行时,内存会被回收,会调用对象本身的__del__()方法
+# print("这是最后一行代码")
+# 正常运行时,不会调用__del__()方法
+# __del__()主要是表示该程序块或者函数已全部执行结束
